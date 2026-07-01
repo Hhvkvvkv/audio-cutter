@@ -340,18 +340,30 @@ class AudioEditorActivity : AppCompatActivity() {
      * @return موضع جديد إذا كان في جزء محذوف، أو نفس الموضع إذا لم يكن
      */
     private fun getSkipPosition(currentPos: Int): Int {
-        for ((start, end) in deletedSegments) {
-            if (currentPos in start until end) {
-                return end
+        var pos = currentPos
+        var maxIter = 20
+        while (maxIter-- > 0) {
+            var skipped = false
+            for ((start, end) in deletedSegments) {
+                if (pos in start until end) {
+                    pos = end
+                    skipped = true
+                    break
+                }
             }
+            if (!skipped) break
         }
-        return currentPos
+        return pos
     }
 
     private fun undoLastOperation() {
         if (deletedSegments.isNotEmpty()) {
             // التراجع عن آخر عملية حذف افتراضي
             val lastDeleted = deletedSegments.removeLast()
+            // استعادة الـ seek bars للنطاق الكامل
+            seekBarStart.progress = 0
+            seekBarEnd.progress = duration
+            updateTimeLabels()
             Toast.makeText(this, "تم التراجع عن حذف الجزء (${lastDeleted.first}-${lastDeleted.second})", Toast.LENGTH_LONG).show()
         } else if (undoHistory.isNotEmpty()) {
             // الرجوع للخلف في سجل التعديلات
@@ -640,6 +652,8 @@ class AudioEditorActivity : AppCompatActivity() {
                 progressDialog.dismiss()
                 result.fold(
                     onSuccess = {
+                        // مسح قائمة الأجزاء المحذوفة افتراضياً بعد الحفظ الفعلي
+                        deletedSegments.clear()
                         if (saveWholeFile) {
                             seekForReview(reviewPointMs)
                         } else {
