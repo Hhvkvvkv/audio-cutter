@@ -69,7 +69,8 @@ class AudioEditorActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private val executor = Executors.newSingleThreadExecutor()
     private var isPreviewing = false
-    private var seekJumpMs: Int = 5000
+    private var seekForwardMs: Int = 5000
+    private var seekRewindMs: Int = 5000
     private var playbackWasCompleted = false
     private var isDestroyedState = false
     private var reviewOffsetMs: Int = 2_000
@@ -77,6 +78,7 @@ class AudioEditorActivity : AppCompatActivity() {
     // قائمة الأجزاء المحذوفة افتراضياً (لن تُحذف فعلياً إلا عند الحفظ)
     private val deletedSegments = mutableListOf<Pair<Int, Int>>()
     private var isVideoFile: Boolean = false
+    private var isManualSeeking = false
     private data class UndoEntry(val filePath: String, val selectionStartMs: Int)
     private val undoHistory = mutableListOf<UndoEntry>()
     private val undoHistoryMaxSize = 10
@@ -392,9 +394,10 @@ class AudioEditorActivity : AppCompatActivity() {
                 if (mediaPlayer.isPlaying) {
                     val curPos = mediaPlayer.currentPosition
                     
-                    // تخطي الأجزاء المحذوفة افتراضياً أثناء المعاينة
-                    val skipTo = getSkipPosition(curPos)
-                    if (skipTo > curPos && skipTo < seekBarEnd.progress) {
+                    // تخطي الأجزاء المحذوفة افتراضياً أثناء المعاينة (فقط إذا لم يكن seek يدوي)
+                    if (!isManualSeeking) {
+                        val skipTo = getSkipPosition(curPos)
+                        if (skipTo > curPos && skipTo < seekBarEnd.progress) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             mediaPlayer.seekTo(skipTo.toLong(), MediaPlayer.SEEK_CLOSEST)
                         } else {
@@ -402,6 +405,8 @@ class AudioEditorActivity : AppCompatActivity() {
                         }
                         handler.postDelayed(this, 100)
                         return
+                    }
+                    
                     }
                     
                     if (curPos >= seekBarEnd.progress) {
@@ -762,33 +767,37 @@ class AudioEditorActivity : AppCompatActivity() {
 
         findViewById<ImageButton>(R.id.btnForward).setOnClickListener {
             if (::mediaPlayer.isInitialized) {
+                isManualSeeking = true
                 val current = mediaPlayer.currentPosition
-                val targetPos = (current + seekJumpMs).coerceAtMost(duration)
+                val targetPos = (current + seekForwardMs).coerceAtMost(duration)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     mediaPlayer.seekTo(targetPos.toLong(), MediaPlayer.SEEK_CLOSEST)
                 } else {
                     mediaPlayer.seekTo(targetPos)
                 }
+                handler.postDelayed({ isManualSeeking = false }, 500)
             }
         }
 
         findViewById<ImageButton>(R.id.btnRewind).setOnClickListener {
             if (::mediaPlayer.isInitialized) {
+                isManualSeeking = true
                 val current = mediaPlayer.currentPosition
-                val targetPos = (current - seekJumpMs).coerceAtLeast(0)
+                val targetPos = (current - seekRewindMs).coerceAtLeast(0)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     mediaPlayer.seekTo(targetPos.toLong(), MediaPlayer.SEEK_CLOSEST)
                 } else {
                     mediaPlayer.seekTo(targetPos)
                 }
+                handler.postDelayed({ isManualSeeking = false }, 500)
             }
         }
         findViewById<ImageButton>(R.id.btnForward).setOnLongClickListener {
-            showJumpStepDialog()
+            showJumpStepDialog(forForward = true)
             true
         }
         findViewById<ImageButton>(R.id.btnRewind).setOnLongClickListener {
-            showJumpStepDialog()
+            showJumpStepDialog(forForward = false)
             true
         }
 
@@ -980,25 +989,27 @@ class AudioEditorActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun showJumpStepDialog() {
+    private fun showJumpStepDialog(forForward: Boolean) {
+        val currentVal = if (forForward) seekForwardMs else seekRewindMs
+        val label = if (forForward) "التقديم" else "التأخير"
         val editText = EditText(this).apply {
-            hint = getString(R.string.jump_dialog_hint)
-            setText("${seekJumpMs}ms")
+            hint = "قيمة زر $label (ms)"
+            setText("${currentVal}ms")
             setSelection(text.length)
         }
 
         AlertDialog.Builder(this)
-            .setTitle(getString(R.string.jump_dialog_title))
+            .setTitle("تخصيص زر $label")
             .setView(editText)
             .setPositiveButton("تطبيق") { _, _ ->
                 val parsed = parseStepInput(editText.text.toString(), duration)
                 if (parsed == null || parsed <= 0) {
                     Toast.makeText(this, R.string.seek_step_invalid, Toast.LENGTH_SHORT).show()
                 } else {
-                    seekJumpMs = parsed
+                    if (forForward) seekForwardMs = parsed else seekRewindMs = parsed
                     Toast.makeText(
                         this,
-                        "${getString(R.string.jump_updated)} ${formatStepValue(seekJumpMs)}",
+                        "تم تعيين ${label}: ${formatStepValue(parsed)}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
