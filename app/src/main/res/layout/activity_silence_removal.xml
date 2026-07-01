@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/primary_dark"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="إزالة الصمت من الصوت"
+            android:textColor="@color/text_white"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:id="@+id/tvSilenceFileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_white"
+            android:textSize="14sp"
+            android:maxLines="2"
+            android:ellipsize="middle"
+            android:layout_marginBottom="24dp" />
+
+        <!-- شريط التمرير: 0=عادي  1=متوسط  2=مرتفع  3=مرتفع جداً -->
+        <SeekBar
+            android:id="@+id/seekBarLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="3"
+            android:progress="0"
+            android:progressTint="@color/accent_color"
+            android:thumbTint="@color/accent_color"
+            android:contentDescription="مستوى إزالة الصمت، من عادي إلى مرتفع جداً"
+            android:layout_marginBottom="28dp" />
+
+        <!-- شريط التقدم والحالة -->
+        <ProgressBar
+            android:id="@+id/silenceProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvSilenceStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#B8C1D9"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <!-- زر التطبيق -->
+        <Button
+            android:id="@+id/btnSilenceApply"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:text="تطبيق"
+            android:textSize="18sp"
+            android:textColor="@color/text_white"
+            android:backgroundTint="@color/accent_color"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp" />
+
+        <!-- مجموعة أزرار النتيجة — تظهر فقط بعد اكتمال التطبيق -->
+        <LinearLayout
+            android:id="@+id/layoutResultButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="16dp">
+
+            <!-- تشغيل / إيقاف -->
+            <Button
+                android:id="@+id/btnSilencePlayPause"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:text="تشغيل النتيجة"
+                android:textSize="16sp"
+                android:textColor="@color/text_white"
+                android:backgroundTint="#1565C0"
+                android:textAllCaps="false"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:layout_marginBottom="10dp" />
+
+            <!-- تراجع -->
+            <Button
+                android:id="@+id/btnSilenceUndo"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:text="تراجع عن العملية"
+                android:textSize="16sp"
+                android:textColor="@color/text_white"
+                android:backgroundTint="#B71C1C"
+                android:textAllCaps="false"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:layout_marginBottom="10dp" />
+
+            <!-- حفظ -->
+            <Button
+                android:id="@+id/btnSilenceSave"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:text="@string/silence_save"
+                android:textSize="16sp"
+                android:textColor="@color/text_white"
+                android:backgroundTint="#2E7D32"
+                android:textAllCaps="false"
+                android:insetTop="0dp"
+                android:insetBottom="0dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

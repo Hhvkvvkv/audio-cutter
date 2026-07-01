@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr format="boolean" name="iconifiedByDefault"/>
+    <attr format="reference" name="commitIcon"/>
+    <attr format="reference" name="goIcon"/>
+    <attr format="reference" name="layout"/>
+    <attr format="reference" name="queryBackground"/>
+    <attr format="reference" name="searchHintIcon"/>
+    <attr format="reference" name="searchIcon"/>
+    <attr format="reference" name="submitBackground"/>
+    <attr format="reference" name="suggestionRowLayout"/>
+    <attr format="reference" name="voiceIcon"/>
+    <attr format="string" name="defaultQueryHint"/>
+    <attr format="string" name="queryHint"/>
+</resources>

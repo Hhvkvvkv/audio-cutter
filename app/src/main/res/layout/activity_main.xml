@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    android:fitsSystemWindows="true">
+    
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_music_logo"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_text"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/accent_color"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="قم باختيار ملف صوتي للبدء في قصه"
+        android:textSize="16sp"
+        android:textColor="@color/text_grey"
+        android:layout_marginBottom="40dp"/>
+
+    <Button
+        android:id="@+id/btnImport"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/btn_import"
+        android:textSize="18sp"
+        android:backgroundTint="@color/accent_color"
+        android:textColor="@color/text_white"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:textAllCaps="false" />
+
+</LinearLayout>

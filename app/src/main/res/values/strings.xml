@@ -1,0 +1,102 @@
+<resources>
+    <string name="app_name">قص الصوت الاحترافي</string>
+    <string name="output_root_folder">قص الصوت</string>
+    <string name="folder_cut_ribbon">القص بالأشرطة</string>
+    <string name="folder_cut_selection">القص بالتحديد</string>
+    <string name="folder_cut_value">القص بالقيمة</string>
+    <string name="title_text">محرر الصوت</string>
+    <string name="btn_import">استيراد ملف صوتي</string>
+    <string name="permission_rationale">يحتاج التطبيق للوصول إلى ملفاتك الصوتية ليتمكن من معالجتها.</string>
+    <string name="method_label">اختر طريقة القص:</string>
+    <string name="method_1">Ribbon Cut (القص بالأشرطة)</string>
+    <string name="method_2">Selection Cut (القص بالتحديد)</string>
+    <string name="method_3">Value Cut (القص بالقيمة)</string>
+    <string name="tool_silence_removal">إزالة الصمت (Silence Removal)</string>
+    <string name="play_pause">تشغيل أو إيقاف مؤقت</string>
+    <string name="forward">تقديم 5 ثواني</string>
+    <string name="rewind">تأخير 5 ثواني</string>
+    <string name="start_slider">شريط تحديد البداية</string>
+    <string name="end_slider">شريط تحديد النهاية</string>
+    <string name="btn_delete_segment">حذف الجزء المحدد نهائياً</string>
+    <string name="btn_save_segment">حفظ الجزء المحدد</string>
+    <string name="btn_final_save">حفظ الملف النهائي</string>
+    <string name="save_dialog_title">حفظ الملف الصوتي</string>
+    <string name="file_name_hint">اسم الملف</string>
+    <string name="format_label">اختر الصيغة:</string>
+
+    <!-- الإدخال اليدوي -->
+    <string name="manual_start_hint">بداية الجزء — مثال: 30 (ثانية) · 1.30 (دقيقة:ثانية) · 1.2.5 (ساعة:دقيقة:ثانية)</string>
+    <string name="manual_end_hint">نهاية الجزء — بنفس الصيغة</string>
+    <string name="apply_manual">تطبيق التحديد</string>
+    <string name="manual_invalid">الصيغة غير صحيحة. استخدم نقاط بين الأرقام مثل 1.30 أو 1.2.5</string>
+    <string name="start_step_hint">قيمة التخصيص لنقطة البداية (مثل: 1000 أو 0.5s أو 10ms)</string>
+    <string name="end_step_hint">قيمة التخصيص لنقطة النهاية (مثل: 1000 أو 0.5s أو 10ms)</string>
+
+    <!-- التحديد الدقيق -->
+    <string name="precise_start">بدء التحديد</string>
+    <string name="precise_end">إنهاء التحديد</string>
+    <string name="precise_play_selection">الاستماع للمحدد</string>
+    <string name="precise_help">شغّل المقطع، اضغط الزر عند نقطة البداية، ثم اضغطه مجدداً عند النهاية. اضغط مطولاً لإعادة الضبط.</string>
+    <string name="precise_no_selection">لم يتم تحديد جزء بعد</string>
+    <string name="precise_reset">تم إعادة الضبط</string>
+    <string name="precise_end_confirmed">تم تأكيد النهاية</string>
+
+    <!-- مقدار حركة الشريط -->
+    <string name="seek_step_dialog_title">مقدار حركة الشريط</string>
+    <string name="seek_step_hint">أدخل القيمة (مثال: 1s, 0.5s, 250ms, 1m, 5%). الحالي:</string>
+    <string name="seek_step_invalid">قيمة غير صالحة</string>
+    <string name="seek_step_updated">تم تحديث مقدار الحركة إلى</string>
+    <string name="jump_dialog_title">قيمة التقديم/الترجيع</string>
+    <string name="jump_dialog_hint">أدخل قيمة القفز (مثل: 10000 أو 500 أو 0.5s)</string>
+    <string name="jump_updated">تم تحديث القفز إلى</string>
+    <string name="no_file_selected">لم يتم اختيار أي ملف</string>
+    <string name="file_browser_title">جميع الملفات — الأحدث أولاً</string>
+    <string name="no_audio_files_found">لا توجد ملفات صوتية متاحة</string>
+    <string name="ogg_only_when_source_ogg">صيغة OGG مدعومة عند كون الملف الأصلي OGG</string>
+    <string name="wav_only_when_source_wav">صيغة WAV مدعومة عند كون الملف الأصلي WAV</string>
+    <string name="wav_source_saves_as_wav">ملفات WAV تحفظ بصيغة WAV فقط في أداة القص الحالية</string>
+
+    <!-- إزالة الصمت -->
+    <string name="silence_preview">معاينة النتيجة (60 ثانية)</string>
+    <string name="silence_stop_preview">إيقاف المعاينة</string>
+    <string name="silence_save">حفظ الملف المعالج</string>
+
+    <!-- إزالة الضوضاء -->
+    <string name="tool_noise_reduction">إزالة الضوضاء (Noise Reduction)</string>
+    <string name="tool_noise_reduction_desc">إزالة الضوضاء من الصوت تلقائياً</string>
+
+    <!-- أدوات جديدة -->
+    <string name="tool_video_cut">قص الفيديو بالتحديد</string>
+    <string name="tool_video_cut_desc">قص الفيديو بطريقة التحديد الدقيق</string>
+    <string name="tool_audio_recorder">مسجل الصوت</string>
+    <string name="tool_audio_recorder_desc">تسجيل الصوت بالميكروفون أو صوت النظام</string>
+
+    <!-- المسجل الصوتي -->
+    <string name="recorder_title">المسجل الصوتي</string>
+    <string name="recorder_source_label">اختر مصدر الصوت:</string>
+    <string name="recorder_source_mic">الميكروفون</string>
+    <string name="recorder_source_system">صوت النظام</string>
+    <string name="recorder_source_both">الميكروفون وصوت النظام</string>
+    <string name="recorder_start">بدء التسجيل</string>
+    <string name="recorder_recording">جاري التسجيل</string>
+    <string name="recorder_paused">متوقف مؤقتاً</string>
+    <string name="recorder_pause">إيقاف مؤقت</string>
+    <string name="recorder_resume">استئناف</string>
+    <string name="recorder_stop_save">إيقاف وحفظ</string>
+    <string name="recorder_cancel">إلغاء</string>
+
+    <!-- سجل الأخطاء -->
+    <string name="tool_error_log">سجل الأخطاء</string>
+    <string name="tool_error_log_desc">عرض سجل أخطاء التطبيق والأدوات</string>
+    <string name="error_log_title">سجل الأخطاء</string>
+    <string name="error_log_clear">مسح</string>
+    <string name="error_log_refresh">تحديث</string>
+
+    <!-- الفيديو -->
+    <string name="no_video_files_found">لا توجد ملفات فيديو متاحة</string>
+    <string name="file_browser_video_title">جميع ملفات الفيديو — الأحدث أولاً</string>
+    <string name="folder_video_silence_removal">إزالة الصمت من الفيديو</string>
+    <string name="folder_video_noise_reduction">إزالة الضوضاء من الفيديو</string>
+    <!-- التراجع -->
+    <string name="btn_undo">التراجع عن التعديل</string>
+</resources>

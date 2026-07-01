@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/primary_dark"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- العنوان -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/recorder_title"
+            android:textColor="@color/text_white"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_marginBottom="32dp" />
+
+        <!-- اختيار مصدر الصوت -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recorder_source_label"
+            android:textColor="#B8C1D9"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnSelectSource"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:text="@string/recorder_source_mic"
+            android:textSize="16sp"
+            android:textColor="@color/text_white"
+            android:backgroundTint="#2A2F45"
+            android:textAllCaps="false"
+            android:gravity="center|start"
+            android:paddingStart="20dp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- زر بدء التسجيل (يختفي بعد البدء) -->
+        <Button
+            android:id="@+id/btnStartRecording"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/recorder_start"
+            android:textSize="18sp"
+            android:textColor="@color/text_white"
+            android:backgroundTint="@color/accent_color"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- حالة التسجيل (تظهر بعد البدء) -->
+        <LinearLayout
+            android:id="@+id/layoutRecording"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- حالة التسجيل -->
+            <TextView
+                android:id="@+id/tvRecorderStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recorder_recording"
+                android:textColor="#4CAF50"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="12dp" />
+
+            <!-- المدة -->
+            <TextView
+                android:id="@+id/tvRecordingTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@color/text_white"
+                android:textSize="42sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="28dp" />
+
+            <!-- مؤشر التسجيل -->
+            <ProgressBar
+                android:id="@+id/recordingProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:layout_marginBottom="28dp" />
+
+            <!-- إيقاف مؤقت / استئناف -->
+            <Button
+                android:id="@+id/btnPauseResume"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:text="@string/recorder_pause"
+                android:textSize="16sp"
+                android:textColor="@color/text_white"
+                android:backgroundTint="#1565C0"
+                android:textAllCaps="false"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:layout_marginBottom="10dp" />
+
+            <!-- إيقاف وحفظ -->
+            <Button
+                android:id="@+id/btnStopSave"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:text="@string/recorder_stop_save"
+                android:textSize="16sp"
+                android:textColor="@color/text_white"
+                android:backgroundTint="#2E7D32"
+                android:textAllCaps="false"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:layout_marginBottom="10dp" />
+
+            <!-- إلغاء -->
+            <Button
+                android:id="@+id/btnCancelRecording"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:text="@string/recorder_cancel"
+                android:textSize="16sp"
+                android:textColor="@color/text_white"
+                android:backgroundTint="#B71C1C"
+                android:textAllCaps="false"
+                android:insetTop="0dp"
+                android:insetBottom="0dp" />
+
+        </LinearLayout>
+
+        <!-- رسالة الحالة -->
+        <TextView
+            android:id="@+id/tvRecorderMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#B8C1D9"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:layout_marginTop="12dp" />
+
+    </LinearLayout>
+</ScrollView>
