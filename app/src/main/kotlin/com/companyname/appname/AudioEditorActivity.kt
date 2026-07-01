@@ -1,6 +1,5 @@
 package com.companyname.appname
 
-import android.util.Log
 import android.content.Intent
 import android.media.AudioFormat
 import android.media.MediaCodec
@@ -1493,15 +1492,8 @@ class AudioEditorActivity : AppCompatActivity() {
         File(outPath).parentFile?.mkdirs()
         File(outPath).delete()
 
-        // محاولة FFmpeg أولاً - يقص الصوت والفيديو بأمر واحد
-        val firstRange = ranges.firstOrNull { it.first < it.second }
-        if (firstRange != null && FFmpegManager.isInitialized()) {
-            val result = FFmpegManager.trimMedia(srcPath, outPath, firstRange.first, firstRange.second, this@AudioEditorActivity)
-            if (result.isSuccess) return
-            Log.w("TRIM", "FFmpeg فشل: ${result.exceptionOrNull()?.message}")
-        }
 
-        val extractor = MediaExtractor()
+val extractor = MediaExtractor()
         var muxer: MediaMuxer? = null
         var muxerStarted = false
         var outTrackIndex = -1

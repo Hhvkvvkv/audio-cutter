@@ -12,7 +12,6 @@ class AudioCutterApp : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        FFmpegManager.initialize(this)  // غير blocking - يبدأ التحميل في الخلفية
         ErrorLog.init(this)
         val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
