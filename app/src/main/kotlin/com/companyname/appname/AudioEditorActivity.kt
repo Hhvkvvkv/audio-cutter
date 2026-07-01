@@ -79,6 +79,7 @@ class AudioEditorActivity : AppCompatActivity() {
     private val deletedSegments = mutableListOf<Pair<Int, Int>>()
     private var isVideoFile: Boolean = false
     private var isManualSeeking = false
+    private var playbackSpeed: Float = 1.0f
     private data class UndoEntry(val filePath: String, val selectionStartMs: Int)
     private val undoHistory = mutableListOf<UndoEntry>()
     private val undoHistoryMaxSize = 10
@@ -551,7 +552,8 @@ class AudioEditorActivity : AppCompatActivity() {
         }
         
         Toast.makeText(this, "تم تمييز الجزء للحذف (سيتم تطبيقه عند الحفظ)", Toast.LENGTH_LONG).show()
-        resetSelectionToFullRange(endSec)
+        // الرجوع إلى بداية الجزء المحذوف ناقص reviewOffsetMs (2 ثانية افتراضياً)
+        resetSelectionToFullRange((startSec - reviewOffsetMs).coerceAtLeast(0))
     }
 
     /**
@@ -803,6 +805,11 @@ class AudioEditorActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btnSaveSegment).setOnClickListener { showSaveDialog(saveWholeFile = false) }
         findViewById<Button>(R.id.btnDeleteSegment).setOnClickListener { deleteSelectedSegment() }
+        // ضغطة مطولة على زر التشغيل: تغيير سرعة التشغيل
+        findViewById<ImageButton>(R.id.btnPlayPause).setOnLongClickListener {
+            showPlaybackSpeedDialog()
+            true
+        }
         findViewById<Button>(R.id.btnUndo).setOnClickListener { undoLastOperation() }
         findViewById<Button>(R.id.btnFinalSave).setOnClickListener { showSaveDialog(saveWholeFile = true) }
 
@@ -984,6 +991,27 @@ class AudioEditorActivity : AppCompatActivity() {
                     reviewOffsetMs = parsed
                     Toast.makeText(this, "تم تحديث وقت الرجوع للخلف إلى ${formatStepValue(reviewOffsetMs)}", Toast.LENGTH_SHORT).show()
                 }
+            }
+            .setNegativeButton("إلغاء", null)
+            .show()
+    }
+
+    private fun showPlaybackSpeedDialog() {
+        val speeds = listOf(0.25f, 0.5f, 0.75f, 1.0f, 1.25f, 1.5f, 2.0f, 2.5f, 3.0f)
+        val labels = speeds.map { "${it}x" }.toTypedArray()
+
+        AlertDialog.Builder(this)
+            .setTitle("سرعة التشغيل")
+            .setSingleChoiceItems(labels, speeds.indexOf(playbackSpeed).coerceAtLeast(0)) { dialog, which ->
+                val newSpeed = speeds[which]
+                playbackSpeed = newSpeed
+                if (::mediaPlayer.isInitialized) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(newSpeed)
+                    }
+                }
+                Toast.makeText(this, "سرعة التشغيل: ${newSpeed}x", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
             }
             .setNegativeButton("إلغاء", null)
             .show()
