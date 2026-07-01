@@ -553,7 +553,7 @@ class AudioEditorActivity : AppCompatActivity() {
         
         Toast.makeText(this, "تم تمييز الجزء للحذف (سيتم تطبيقه عند الحفظ)", Toast.LENGTH_LONG).show()
         // الرجوع إلى بداية الجزء المحذوف ناقص reviewOffsetMs (2 ثانية افتراضياً)
-        resetSelectionToFullRange((startSec - reviewOffsetMs).coerceAtLeast(0))
+        resetSelectionToFullRange(startSec)
     }
 
     /**

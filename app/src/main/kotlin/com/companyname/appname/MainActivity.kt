@@ -63,6 +63,55 @@ class MainActivity : AppCompatActivity() {
                 requestBestAvailablePermission()
             }
         }
+
+        // طلب كل الأذونات عند فتح التطبيق
+        requestAllPermissions()
+    }
+
+    /**
+     * طلب جميع الأذونات المطلوبة في التطبيق عند التشغيل الأول
+     */
+    private fun requestAllPermissions() {
+        val permissionsToRequest = mutableListOf<String>()
+
+        // أذونات التخزين والملفات
+        if (Build.VERSION.SDK_INT >= 33) {
+            if (ContextCompat.checkSelfPermission(this, "android.permission.READ_MEDIA_AUDIO") != PackageManager.PERMISSION_GRANTED)
+                permissionsToRequest.add("android.permission.READ_MEDIA_AUDIO")
+            if (ContextCompat.checkSelfPermission(this, "android.permission.READ_MEDIA_VIDEO") != PackageManager.PERMISSION_GRANTED)
+                permissionsToRequest.add("android.permission.READ_MEDIA_VIDEO")
+            if (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") != PackageManager.PERMISSION_GRANTED)
+                permissionsToRequest.add("android.permission.POST_NOTIFICATIONS")
+        } else {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                permissionsToRequest.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (Build.VERSION.SDK_INT <= 28) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                    permissionsToRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+        }
+
+        // أذونات التسجيل
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
+            permissionsToRequest.add(Manifest.permission.RECORD_AUDIO)
+
+        if (permissionsToRequest.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                permissionsToRequest.toTypedArray(),
+                PERMISSION_REQUEST_CODE
+            )
+        }
+
+        // طلب إذن الوصول لكل الملفات (Android 11+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !Environment.isExternalStorageManager()) {
+            // طلب الوصول لكل الملفات بعد الأذونات الأخرى
+            findViewById<Button>(R.id.btnImport).postDelayed({
+                if (!hasBroadFileAccess()) {
+                    requestManageAllFilesPermission()
+                }
+            }, 2000)
+        }
     }
 
     private fun hasBroadFileAccess(): Boolean {
@@ -110,9 +159,7 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openAudioPicker()
-            } else {
-                Toast.makeText(this, "عذراً، يجب منح إذن الوصول للملفات لاستخدام التطبيق", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "تم منح الأذونات بنجاح", Toast.LENGTH_SHORT).show()
             }
         }
     }
